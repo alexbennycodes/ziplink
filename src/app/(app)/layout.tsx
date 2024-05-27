@@ -12,10 +12,9 @@ export default async function AppLayout({
   return (
     <main>
       <NextAuthProvider>
-        <div className="flex h-screen">
+        <div className="flex">
           <Sidebar />
           <main className="flex-1 md:p-8 pt-2 p-8 overflow-y-auto">
-            <Navbar />
             {children}
           </main>
         </div>
