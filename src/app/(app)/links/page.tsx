@@ -10,7 +10,7 @@ export const revalidate = 0;
 
 export default async function LinksPage() {
   return (
-    <main className="flex w-full flex-col space-y-4 duration-500 animate-in fade-in-5 slide-in-from-bottom-2">
+    <main className="flex w-full duration-500 animate-in fade-in-5 slide-in-from-bottom-2">
       <div className="relative">
         <div className="flex justify-between">
           <h1 className="font-semibold text-2xl my-2">Links</h1>
@@ -28,7 +28,7 @@ const Links = async () => {
 
   return (
     <Suspense fallback={<Loading />}>
-      <LinkList links={links} />
+      <LinkList links={links || []} />
     </Suspense>
   );
 };

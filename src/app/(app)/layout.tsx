@@ -13,10 +13,7 @@ export default async function AppLayout({
     <main>
       <NextAuthProvider>
         <div className="flex">
-          <Sidebar />
-          <main className="flex-1 md:p-8 pt-2 p-8 overflow-y-auto">
-            {children}
-          </main>
+          <main className="flex-1 overflow-y-auto">{children}</main>
         </div>
       </NextAuthProvider>
 
