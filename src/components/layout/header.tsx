@@ -11,7 +11,7 @@ const Header = () => {
         "flex w-full",
         "pb-3 pt-4 lg:px-4",
         "sticky top-0 z-50",
-        "bg-background border-b"
+        "bg-background"
       )}
     >
       <div

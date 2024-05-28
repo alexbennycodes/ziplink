@@ -1,11 +1,6 @@
-import { db } from "@/lib/db/index";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
-import { Adapter } from "next-auth/adapters";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { DefaultSession, getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { env } from "@/lib/env.mjs";
-import GoogleProvider from "next-auth/providers/google";
-import GithubProvider from "next-auth/providers/github";
 
 declare module "next-auth" {
   interface Session {
@@ -23,26 +18,6 @@ export type AuthSession = {
       email?: string;
     };
   } | null;
-};
-
-export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db) as Adapter,
-  callbacks: {
-    session: ({ session, user }) => {
-      session.user.id = user.id;
-      return session;
-    },
-  },
-  providers: [
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
-    GithubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    }),
-  ],
 };
 
 export const getUserAuth = async () => {

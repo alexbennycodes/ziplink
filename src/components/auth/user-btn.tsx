@@ -26,7 +26,7 @@ export default async function UserButton() {
         })}
       >
         <span>Get Started</span>
-        <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-[2px]" />
+        <ArrowRight className="h-4 w-4 transform transition-transform group-hover:translate-x-[2px]" />
       </Link>
     );
 

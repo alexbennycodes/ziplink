@@ -20,5 +20,6 @@ export type OptimisticAction<T> = {
 
 export const formatDate = (date: Date) => {
   // Return "23 January 2021"
-  return format(date, "dd MMMM, yyyy");
+  if (date) return format(date, "dd MMMM, yyyy");
+  return null;
 };

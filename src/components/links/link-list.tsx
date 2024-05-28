@@ -10,7 +10,7 @@ export default async function LinkList({ links }: { links: CompleteLink[] }) {
   }
 
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       {data.links.map((link) => (
         <Link link={link} key={link.id} />
       ))}
@@ -25,7 +25,7 @@ const Link = ({ link }: { link: CompleteLink }) => {
         url={link.url}
         slug={link.slug}
         clicks={link.clicks}
-        lastClicked={link.lastClicked}
+        createdAt={link.createdAt}
       />
     </li>
   );
@@ -40,9 +40,6 @@ const EmptyState = () => {
       <p className="mt-1 text-sm text-muted-foreground">
         Get started by creating a new link.
       </p>
-      {/* <div className="mt-6">
-        <LinkModal emptyState={true} />
-      </div> */}
     </div>
   );
 };

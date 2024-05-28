@@ -10,13 +10,11 @@ const Sidebar = async () => {
   if (session.session === null) return null;
 
   return (
-    <aside className="h-screen min-w-52 bg-muted hidden md:block p-4 pt-8 border-r border-border shadow-inner">
+    <aside className="h-full min-w-52 bg-muted/50 hidden md:block p-4 pt-8 border-r border-border shadow-inner absolute bottom-0 left-0 top-0">
       <div className="flex flex-col justify-between h-full">
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold ml-4">Logo</h3>
           <SidebarItems />
         </div>
-        <UserDetails session={session} />
       </div>
     </aside>
   );

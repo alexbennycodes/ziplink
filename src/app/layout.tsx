@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/layout/header";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const mono = Roboto_Mono({
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ziplink.vercel.app"),
@@ -43,15 +48,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`font-sans ${inter.variable} ${mono.variable} antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>

@@ -10,8 +10,6 @@ export const insertLinkSchema = baseSchema.omit({ id: true });
 export const insertLinkParams = baseSchema.omit({
   id: true,
   userId: true,
-  lastClicked: true,
-  clicks: true,
 });
 
 export const updateLinkSchema = baseSchema;

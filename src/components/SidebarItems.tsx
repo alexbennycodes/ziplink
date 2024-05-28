@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { defaultLinks, additionalLinks } from "@/config/nav";
+import { defaultLinks } from "@/config/nav";
 
 export interface SidebarLink {
   title: string;
@@ -15,21 +15,7 @@ export interface SidebarLink {
 }
 
 const SidebarItems = () => {
-  return (
-    <>
-      <SidebarLinkGroup links={defaultLinks} />
-      {additionalLinks.length > 0
-        ? additionalLinks.map((l) => (
-            <SidebarLinkGroup
-              links={l.links}
-              title={l.title}
-              border
-              key={l.title}
-            />
-          ))
-        : null}
-    </>
-  );
+  return <SidebarLinkGroup links={defaultLinks} />;
 };
 export default SidebarItems;
 
@@ -43,7 +29,6 @@ const SidebarLinkGroup = ({
   border?: boolean;
 }) => {
   const fullPathname = usePathname();
-  const pathname = "/" + fullPathname.split("/")[1];
 
   return (
     <div className={border ? "border-border border-t my-8 pt-4" : ""}>
@@ -55,7 +40,7 @@ const SidebarLinkGroup = ({
       <ul>
         {links.map((link) => (
           <li key={link.title}>
-            <SidebarLink link={link} active={pathname === link.href} />
+            <SidebarLink link={link} active={fullPathname === link.href} />
           </li>
         ))}
       </ul>
@@ -80,7 +65,7 @@ const SidebarLink = ({
         <div
           className={cn(
             "opacity-0 left-0 h-6 w-[4px] absolute rounded-r-lg bg-primary",
-            active ? "opacity-100" : "",
+            active ? "opacity-100" : ""
           )}
         />
         <link.icon className="h-3.5 mr-1" />

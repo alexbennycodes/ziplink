@@ -8,20 +8,21 @@ type Props = {
   clicks: number;
 };
 
-const CardLinks = ({ url, slug, lastClicked, clicks }: Props) => {
+const CardLinks = ({ url, slug, createdAt, clicks }: Props) => {
   return (
-    <div className="border bg-background p-3 rounded w-full space-y-3">
+    <div className="border bg-background px-5 py-3 rounded w-full space-y-4 hover:shadow-lg transition-all ease-in-out duration-300">
       <div className="flex justify-between items-center">
-        <h3>/{slug}</h3>
+        <h3 className="font-mono font-bold text-lg">/{slug}</h3>
         <div>
           <div className="flex cursor-default items-center space-x-2 text-sm">
-            <BarChartIcon size={14} />
-            <span className="font-mono">{clicks} clicks</span>
+            <span className="">{clicks} clicks</span>
           </div>
         </div>
       </div>
-      <h2 className="text-foreground/60 truncate">{url}</h2>
-      <p className="text-foreground/40 text-right">{formatDate(lastClicked)}</p>
+      <h2 className="text-foreground/60 truncate font-mono">{url}</h2>
+      <p className="text-foreground/40 text-right text-sm">
+        {formatDate(createdAt)}
+      </p>
     </div>
   );
 };

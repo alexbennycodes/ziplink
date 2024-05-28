@@ -10,24 +10,27 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
     const { session } = await getUserAuth();
     if (!session) return new Response("Unauthorized", { status: 400 });
-    const validatedData = insertLinkParams.parse(await req.json());
-    const { link } = await createLink(validatedData);
+    const data = await req.json();
 
-    return NextResponse.json(blog, { status: 201 });
+    const { link } = await createLink(data);
 
     revalidatePath("/dashboard");
-    return new Response(JSON.stringify({ message: "ok", link: l }), {
-      status: 200,
-    });
+
+    return new Response(
+      JSON.stringify({ message: "New Ziplink created", success: true, link }),
+      {
+        status: 201,
+      }
+    );
   } catch (err) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
-      return NextResponse.json({ error: err }, { status: 500 });
+      return NextResponse.json({ error: err.message }, { status: 500 });
     }
   }
 }
@@ -49,7 +52,7 @@ export async function PUT(req: Request) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
-      return NextResponse.json(err, { status: 500 });
+      return NextResponse.json(err.message, { status: 500 });
     }
   }
 }
@@ -69,7 +72,7 @@ export async function DELETE(req: Request) {
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
-      return NextResponse.json(err, { status: 500 });
+      return NextResponse.json(err.message, { status: 500 });
     }
   }
 }
