@@ -1,7 +1,5 @@
 import { checkAuth } from "@/lib/auth/utils";
 import { Toaster } from "@/components/ui/sonner";
-import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
 import NextAuthProvider from "@/lib/auth/Provider";
 import DashboardRoutesComponent from "@/components/dashboard-routes";
 

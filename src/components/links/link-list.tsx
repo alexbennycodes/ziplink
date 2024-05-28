@@ -2,16 +2,14 @@ import { getLinks } from "@/lib/api/links/queries";
 import { CompleteLink } from "@/lib/db/schema/links";
 import CardLinks from "./card-links";
 
-export default async function LinkList({ links }: { links: CompleteLink[] }) {
-  const data = await getLinks();
-
-  if (data.links.length === 0) {
+export default function LinkList({ links }: { links: CompleteLink[] }) {
+  if (links.length === 0) {
     return <EmptyState />;
   }
 
   return (
     <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      {data.links.map((link) => (
+      {links.map((link) => (
         <Link link={link} key={link.id} />
       ))}
     </ul>

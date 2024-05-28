@@ -1,6 +1,5 @@
 import SignIn from "@/components/auth/SignIn";
 import { getUserAuth } from "@/lib/auth/utils";
-import UserSettings from "./UserSettings";
 
 export default async function Home() {
   const { session } = await getUserAuth();

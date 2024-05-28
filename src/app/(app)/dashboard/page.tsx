@@ -5,8 +5,6 @@ import CreateLink from "@/components/links/create-link";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 
-export const revalidate = 0;
-
 export default async function LinksPage() {
   const { links } = await getLinks();
 

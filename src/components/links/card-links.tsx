@@ -4,7 +4,7 @@ import { BarChartIcon } from "lucide-react";
 type Props = {
   url: string;
   slug: string;
-  lastClicked: Date;
+  createdAt: Date;
   clicks: number;
 };
 
