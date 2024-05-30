@@ -32,3 +32,27 @@ export const checkIfSlugExist = async (slug: string) => {
 
   return false;
 };
+
+export const getLinkbySlug = async (slug: string) => {
+  const result = await db.link.findFirst({
+    where: {
+      slug: slug,
+    },
+  });
+
+  return result;
+};
+
+export const updateLinkClickById = async (id: string) => {
+  await db.link.update({
+    where: {
+      id,
+    },
+    data: {
+      clicks: {
+        increment: 1,
+      },
+      lastClicked: new Date(),
+    },
+  });
+};

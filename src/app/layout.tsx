@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Header from "@/components/layout/header";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const mono = Roboto_Mono({
@@ -57,10 +56,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            {children}
-          </div>
+          <div className="min-h-screen flex flex-col">{children}</div>
         </ThemeProvider>
       </body>
     </html>
