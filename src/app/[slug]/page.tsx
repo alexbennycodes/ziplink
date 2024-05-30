@@ -19,15 +19,11 @@ const Page = async ({ params }: Props) => {
     notFound();
     return;
   }
-  try {
-    const link = await getLinkbySlug(slugRoute);
+  const link = await getLinkbySlug(slugRoute);
 
-    if (link) {
-      await updateLinkClickById(link.id);
-      permanentRedirect(link.url);
-    }
-  } catch (error) {
-    throw new Error("Error while updating link clicks");
+  if (link) {
+    await updateLinkClickById(link.id);
+    permanentRedirect(link.url);
   }
 
   return;
