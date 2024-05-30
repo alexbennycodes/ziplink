@@ -19,7 +19,7 @@ export default async function UserButton() {
   if (!session?.user)
     return (
       <Link
-        href="/dashboard"
+        href="/sign-in"
         className={buttonVariants({
           variant: "outline",
           className: "group",
