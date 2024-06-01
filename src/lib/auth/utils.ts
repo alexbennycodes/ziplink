@@ -22,6 +22,7 @@ export type AuthSession = {
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },

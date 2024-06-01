@@ -8,12 +8,6 @@ const UserMenu = () => {
   return (
     <>
       <DropdownMenuItem asChild className="flex gap-2">
-        <Link href="/">
-          <HomeIcon size={iconSize} />
-          <span>Home</span>
-        </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild className="flex gap-2">
         <Link href="/dashboard">
           <LayoutDashboardIcon size={iconSize} />
           <span>Dashboard</span>

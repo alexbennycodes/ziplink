@@ -23,8 +23,13 @@ export default function LandingPage() {
           short links effortlessly.
         </p>
 
-        <Button className="duration-700 animate-in fade-in-100 slide-in-from-bottom-10">
-          Get Started for free <ArrowRight className="h-4 w-4" />
+        <Button
+          asChild
+          className="duration-700 animate-in fade-in-100 slide-in-from-bottom-10"
+        >
+          <Link href="/sign-in">
+            Get Started for free <ArrowRight className="h-4 w-4" />
+          </Link>
         </Button>
       </section>
       <DotPattern

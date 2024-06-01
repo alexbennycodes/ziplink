@@ -8,48 +8,52 @@ import { getToken } from "next-auth/jwt";
 
 export default withAuth(
   async function middleware(req: NextRequest) {
-    const token = await getToken({ req, secret: env.NEXTAUTH_SECRET });
+    try {
+      const token = await getToken({ req, secret: env.NEXTAUTH_SECRET });
 
-    const isLoggedIn = !!token;
+      const isLoggedIn = !!token;
 
-    const { nextUrl } = req;
+      const { nextUrl } = req;
 
-    const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
-    const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
-    const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-    const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+      const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
+      const isProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
+      const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+      const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
-    const slugRoute = req.nextUrl.pathname.split("/").pop();
+      const slugRoute = req.nextUrl.pathname.split("/").pop();
 
-    // ⚙️ Is Api Route:
-    if (isApiAuthRoute) {
-      return NextResponse.next();
-    }
+      // ⚙️ Is Api Route:
+      if (isApiAuthRoute) {
+        return NextResponse.next();
+      }
 
-    // ⚙️ Is Auth Route. First, check is authenticated:
-    if (isAuthRoute) {
-      if (isLoggedIn) {
+      // ⚙️ Is Auth Route. First, check is authenticated:
+      if (isAuthRoute) {
+        if (isLoggedIn) {
+          return NextResponse.redirect(new URL("/dashboard", req.url));
+        }
+        return NextResponse.next();
+      }
+
+      // ⚙️ Protected routes. If not authenticated, redirect to /auth:
+      if (!isLoggedIn && isProtectedRoute) {
+        return NextResponse.redirect(new URL("/sign-in", req.url));
+      }
+
+      // ⚙️ Home route if authenticated, redirect to /dashboard:
+      if (isLoggedIn && isPublicRoute) {
         return NextResponse.redirect(new URL("/dashboard", req.url));
       }
+
+      // ⚙️ Redirect using slug:
+      // If not public route and not protected route:
+      if (!isPublicRoute && !isProtectedRoute) {
+        return NextResponse.next();
+      }
       return NextResponse.next();
+    } catch (error) {
+      return NextResponse.error();
     }
-
-    // ⚙️ Protected routes. If not authenticated, redirect to /auth:
-    if (!isLoggedIn && isProtectedRoute) {
-      return NextResponse.redirect(new URL("/sign-in", req.url));
-    }
-
-    // ⚙️ Home route if authenticated, redirect to /dashboard:
-    if (isLoggedIn && isPublicRoute) {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
-    }
-
-    // ⚙️ Redirect using slug:
-    // If not public route and not protected route:
-    if (!isPublicRoute && !isProtectedRoute) {
-      return NextResponse.next();
-    }
-    return NextResponse.next();
   },
   {
     callbacks: {
