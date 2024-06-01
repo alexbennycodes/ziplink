@@ -9,6 +9,7 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
+  await checkAuth();
   return (
     <>
       <Header />
