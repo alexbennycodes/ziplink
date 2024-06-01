@@ -11,7 +11,8 @@ const Header = () => {
         "flex w-full",
         "pb-3 pt-4 lg:px-4",
         "sticky top-0 z-50",
-        "bg-background"
+        "bg-background",
+        "duration-500 animate-in fade-in-100 slide-in-from-top-10"
       )}
     >
       <div

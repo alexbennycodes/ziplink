@@ -13,7 +13,7 @@ const mono = Roboto_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ziplink.vercel.app"),
   title: {
-    default: "Ziplink - A beautifully open-source URL shortener",
+    default: "Ziplink - An open-source URL shortener",
     template: "%s - Ziplink",
   },
   manifest: "/manifest.json",
@@ -22,13 +22,7 @@ export const metadata: Metadata = {
       rel: "icon",
       type: "image/png",
       sizes: "32x32",
-      url: "/images/logo_png.png",
-    },
-    {
-      rel: "icon",
-      type: "image/svg+xml",
-      sizes: "any",
-      url: "/images/logo_svg.svg",
+      url: "/images/favicon-32x32.png",
     },
     {
       rel: "apple-touch-icon",
@@ -37,7 +31,7 @@ export const metadata: Metadata = {
       url: "/images/apple-touch-icon.png",
     },
   ],
-  description: "An open-source URL shortener built with T3 Stack.",
+  description: "An open-source URL shortener",
 };
 
 export default function RootLayout({
