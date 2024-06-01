@@ -1,19 +1,13 @@
+import { sessionSchema } from "./../../../prisma/zod/session";
 import { db } from "@/lib/db/index";
 import { env } from "@/lib/env.mjs";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { DefaultSession, NextAuthOptions, getServerSession } from "next-auth";
 import { Adapter } from "next-auth/adapters";
+import { JWT } from "next-auth/jwt";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { redirect } from "next/navigation";
-
-declare module "next-auth" {
-  interface Session {
-    user: DefaultSession["user"] & {
-      id: string;
-    };
-  }
-}
 
 export type AuthSession = {
   session: {
@@ -28,11 +22,11 @@ export type AuthSession = {
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
-  callbacks: {
-    session: ({ session, user }) => {
-      session.user.id = user.id;
-      return session;
-    },
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/sign-in",
   },
   providers: [
     GoogleProvider({
@@ -44,6 +38,41 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    async session({ token, session }) {
+      if (session.user) {
+        (session.user as { id: string }).id = token.id as string;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        (session.user as { image: string }).image = token.image as string;
+      }
+
+      return session;
+    },
+    async jwt({ token, user }) {
+      const dbUser = await db.user.findFirst({
+        where: {
+          email: token.email,
+        },
+      });
+
+      if (!dbUser) {
+        if (user) {
+          token.id = user.id!;
+          token.email = user.email!;
+          token.name = user.name!;
+        }
+        return token;
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        image: dbUser.image,
+      };
+    },
+  },
 };
 
 export const getUserAuth = async () => {
