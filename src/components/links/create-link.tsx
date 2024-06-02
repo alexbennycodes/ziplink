@@ -34,6 +34,28 @@ interface Props {
   children: ReactNode;
 }
 
+const FORBIDDEN_SLUGS = [
+  "dashboard",
+  "settings",
+  "setting",
+  "account",
+  "accounts",
+  "home",
+];
+
+function generateRandomString(length: number = 7) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
+  let result = "";
+  const charactersLength = characters.length;
+
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+}
+
 const CreateLinkSchema = z.object({
   url: z
     .string()
@@ -57,8 +79,9 @@ const CreateLinkSchema = z.object({
       message:
         "Custom short link must not contain any blank spaces or special characters.",
     })
-    .regex(/^(?!.*&c$)/, {
-      message: "Custom short link can't end with &c.",
+    .refine((value) => !FORBIDDEN_SLUGS.includes(value), {
+      message:
+        "This slug already exists. Write another or generate a random slug.",
     }),
 });
 
@@ -79,7 +102,7 @@ const CreateLink = (props: Props) => {
 
   const handleGenerateRandomSlug = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const randomSlug = Math.random().toString(36).substring(6);
+    const randomSlug = generateRandomString(7);
     form.setValue("slug", randomSlug);
     form.clearErrors("slug");
   };
