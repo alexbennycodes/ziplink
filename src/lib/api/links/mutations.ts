@@ -16,6 +16,7 @@ export const createLink = async (link: NewLinkParams) => {
   const { session } = await getUserAuth();
   const newLink = insertLinkSchema.parse({
     ...link,
+    clicks: 0,
     userId: session?.user.id!,
   });
   try {
