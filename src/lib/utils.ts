@@ -11,13 +11,6 @@ export const timestamps: { createdAt: true; updatedAt: true } = {
   updatedAt: true,
 };
 
-export type Action = "create" | "update" | "delete";
-
-export type OptimisticAction<T> = {
-  action: Action;
-  data: T;
-};
-
 export const formatDate = (date: Date) => {
   // Return "23 January 2021"
   if (date) return format(date, "dd MMMM, yyyy");

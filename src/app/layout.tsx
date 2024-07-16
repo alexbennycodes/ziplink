@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import NextAuthProvider from "@/lib/auth/Provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const mono = Roboto_Mono({
@@ -44,14 +45,16 @@ export default function RootLayout({
       <body
         className={`font-sans ${inter.variable} ${mono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="min-h-screen flex flex-col">{children}</div>
-        </ThemeProvider>
+        <NextAuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="min-h-screen flex flex-col">{children}</div>
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
